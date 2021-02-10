@@ -7,8 +7,6 @@ set(CMAKE_BUILD_TYPE "Release")
 #set(CMAKE_BUILD_TYPE "Debug")
 
 
-
-
 # Check C++11 or C++0x support
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -31,7 +29,7 @@ FIND_PACKAGE( OpenMP REQUIRED)
 if(OPENMP_FOUND)
 message("OPENMP FOUND")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -O3")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif()
 
@@ -64,8 +62,6 @@ BilateralGrid.cpp
 )
 
 
-
-
 target_link_libraries(${PROJECT_NAME}
 ${OpenCV_LIBS}
 ${EIGEN3_LIBS}
@@ -92,9 +88,11 @@ target_link_libraries(bilater ${PROJECT_NAME} )
 add_executable(colorize new_color.cpp)
 target_link_libraries(colorize ${PROJECT_NAME} )
 
-add_executable(colorize_test color.cpp)
-target_link_libraries(colorize_test ${PROJECT_NAME} )
+add_executable(depth_impainting depth_impainting.cpp)
+target_link_libraries(depth_impainting ${PROJECT_NAME} )
 
+#add_executable(colorize_test color.cpp)
+#target_link_libraries(colorize_test ${PROJECT_NAME} )
 
 #add_executable(SparseMatrix  Sparse-Matrix/src/SparseMatrix/SparseMatrix.cpp Sparse-Matrix/tests/run.cpp)
 #target_link_libraries( SparseMatrix ${PROJECT_NAME} )
